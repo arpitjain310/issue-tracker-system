@@ -9,7 +9,7 @@
 <body>
   
   <h1>Projects List</h1>
-  <ul>
+  <ul style="list-style-type:square">
     <% projects.forEach(project => { %>
       <li>
         <a href="/project/<%= project._id %>/"><%= project.name %></a>

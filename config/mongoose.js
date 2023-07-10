@@ -1,10 +1,18 @@
 const mongoose = require('mongoose');
 
-// Connect to MongoDB
+//connect to the database
 mongoose.connect(process.env.MONGODB_URI)
-.then(() => {
-  console.log('Connected to MongoDB');
-})
-.catch((error) => {
-  console.error('Error connecting to MongoDB:', error);
+
+//acquire the connection(to check if it's successful)
+const db = mongoose.connection;
+
+//error
+db.on('error', function(err) {
+     console.log("Not able to connect.",err.message); 
+});
+
+//success
+db.once('open', function() {
+    console.log("Successfully connected to the database");
+
 });
