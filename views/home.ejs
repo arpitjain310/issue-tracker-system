@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Issue Tracker - Home</title>
+  <link rel="stylesheet" type="text/css" href="/assets/styles.css">
+
+</head>
+<body>
+  
+  <h1>Projects List</h1>
+  <ul>
+    <% projects.forEach(project => { %>
+      <li>
+        <a href="/project/<%= project._id %>/"><%= project.name %></a>
+      </li>
+    <% }) %>
+  </ul>
+  <div class="new_project">
+  <a href="/create"><button>Create a new Project</button></a>
+</div>
+</body>
+</html>

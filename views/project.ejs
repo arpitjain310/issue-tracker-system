@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Issue Tracker - Project Detail</title>
+    <link rel="stylesheet" type="text/css" href="/assets/styles.css">
+
+</head>
+<body>
+  <a href="/"><button id="Home">Home</button></a>
+  <h1><%= project.name %> - Bugs</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Title
+          <br>
+          <input type="text" name="titleFilter" id="titleFilter" placeholder="Filter by Title">
+        </th>
+        <th>
+          Description
+          <br>
+          <input type="text" name="descriptionFilter" id="descriptionFilter" placeholder="Filter by Description">
+        </th>
+        <th>
+          Author
+          <br>
+          <input type="text" name="authorFilter" id="authorFilter" placeholder="Filter by Author">
+        </th>
+        <th>
+          Labels
+          <br>
+          <input type="text" name="labelsFilter" id="labelsFilter" placeholder="Filter by Labels">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% issues.forEach(issue => { %>
+        <tr>
+          <td><%= issue.title %></td>
+          <td><%= issue.description %></td>
+          <td><%= issue.author %></td>
+          <td><%= issue.labels.join(', ') %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <a href="/project/<%= project.id %>/create-issue"><button>Create an Issue</button></a>
+
+  <script>
+    const titleFilterInput = document.getElementById('titleFilter');
+    const descriptionFilterInput = document.getElementById('descriptionFilter');
+    const authorFilterInput = document.getElementById('authorFilter');
+    const labelsFilterInput = document.getElementById('labelsFilter');
+
+    titleFilterInput.addEventListener('input', applyFilters);
+    descriptionFilterInput.addEventListener('input', applyFilters);
+    authorFilterInput.addEventListener('input', applyFilters);
+    labelsFilterInput.addEventListener('input', applyFilters);
+
+    function applyFilters() {
+      const titleFilter = titleFilterInput.value.trim().toLowerCase();
+      const descriptionFilter = descriptionFilterInput.value.trim().toLowerCase();
+      const authorFilter = authorFilterInput.value.trim().toLowerCase();
+      const labelsFilter = labelsFilterInput.value.trim().toLowerCase();
+
+      const rows = document.querySelectorAll('tbody tr');
+
+      rows.forEach(row => {
+        const title = row.cells[0].textContent.toLowerCase();
+        const description = row.cells[1].textContent.toLowerCase();
+        const author = row.cells[2].textContent.toLowerCase();
+        const labels = row.cells[3].textContent.toLowerCase();
+
+        const titleMatch = title.includes(titleFilter);
+        const descriptionMatch = description.includes(descriptionFilter);
+        const authorMatch = author.includes(authorFilter);
+        const labelsMatch = labels.includes(labelsFilter);
+
+        if (titleMatch && descriptionMatch && authorMatch && labelsMatch) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
